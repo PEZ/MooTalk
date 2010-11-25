@@ -1,0 +1,33 @@
+  <h2>Chat: <em>{{chat.title}}</em></h2>
+  <form method="post">
+    <input type="hidden" name="chat" value="{{chat.key}}" />
+    <input type="hidden" name="action" value="add_participant" />
+    <select name="address">
+    {% for user in chat.non_users  %}
+      <option value="{{user.address}}">{{user.address}}</option>
+    {% endfor %}
+    </select>
+    <input type="submit" value="Add participant" />
+  </form>
+  <h2>Participants</h2>
+  <ul>
+    {% for user in chat.users %}
+      <li>
+        <form method="post">
+          <input type="hidden" name="chat" value="{{chat.key}}" />
+          <input type="hidden" name="participant" value="{{user.address}}" />
+          <input type="hidden" name="action" value="remove_participant" />
+          <input type="submit" value="X" />
+          <img src="{{ user.avatar }}" alt="gravatar" />
+          <label>{{user.address}}</label>
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <form method="post">
+    <input type="hidden" name="chat" value="{{chat.key}}" />
+    <input type="hidden" name="action" value="delete_chat" />
+    <input type="submit" value="Delete this chat" />
+    <label>(Delete all participants first)</label>
+  </form>

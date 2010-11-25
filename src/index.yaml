@@ -1,0 +1,7 @@
+indexes:
+- kind: User
+  properties:
+  - name: nickname
+    direction: asc
+  - name: address
+    direction: asc
