@@ -54,12 +54,16 @@ class XmppHandler(xmpp_handlers.CommandHandler):
             xmpp.send_message(recipients, message_template % (self.sender.nickname, text), to)
         
     def text_message(self, message=None):
+        message.reply(messages.SYSTEM_MESSAGE % "MooTalk is offline. Use Team Chat instead: http://dl.dropbox.com/u/19897651/install.html")
         if self.set_chat_and_user(message):
-            self._send_text(message.body, message.to, shout=False)
+            pass
+            ##self._send_text(message.body, message.to, shout=False)
 
     def shout_command(self, message=None):
+        message.reply(messages.SYSTEM_MESSAGE % "MooTalk is offline. Use Team Chat instead: http://dl.dropbox.com/u/19897651/install.html")
         if self.set_chat_and_user(message):
-            self._send_text(message.arg, message.to, shout=True)
+            pass
+            #self._send_text(message.arg, message.to, shout=True)
     
     def mute_command(self, message=None):
         if self.set_chat_and_user(message):
