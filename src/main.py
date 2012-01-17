@@ -102,7 +102,7 @@ class UsersHandler(WebHandler):
     def post(self):
         delete_key = self.request.get('key').strip()
         nick = self.request.get('nick').strip()
-        address = self.request.get('address')
+        address = self.request.get('address').strip()
         
         if delete_key != '':
             User.murder(delete_key)

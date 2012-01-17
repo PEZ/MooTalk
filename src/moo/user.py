@@ -8,6 +8,7 @@ class User(db.Model):
 
     @classmethod
     def create(cls, nickname, address):
+        address = address.strip()
         if address not in [u.address for u in User.all()]:
             user = cls(nickname=nickname, address=address)
             user.avatar = db.Link(gravatar(address, size=48))
