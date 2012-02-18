@@ -57,8 +57,8 @@ class Chat(db.Model):
         Adds a user to a chat and also sends an invitation to the user to authorize the channel.
         """
         if address in [u.address for u in User.all()]:
-            xmpp.send_invite(address, self.jid)
             db.run_in_transaction(self._add_participantTx, address)
+            xmpp.send_invite(address, self.jid)
     
     def _remove_participantTx(self, address):
         if address in self.participants:
@@ -67,8 +67,8 @@ class Chat(db.Model):
     
     def remove_participant(self, address):
         remove_msg = "You have been removed from this channel by %s." % users.get_current_user().nickname()
-        xmpp.send_message(address, remove_msg, self.jid, xmpp.MESSAGE_TYPE_HEADLINE)
         db.run_in_transaction(self._remove_participantTx, address)
+        xmpp.send_message(address, remove_msg, self.jid, xmpp.MESSAGE_TYPE_HEADLINE)
     
     def add_listener(self, address):
         if address in self.non_listeners:
