@@ -5,13 +5,13 @@ SHOUT_MESSAGE = "%s SHOUTS: %s"
 ME_MESSAGE = "*%s* %s"
 PRIVATE_MESSAGE = "-> *%s* %s"
 SYSTEM_MESSAGE = "*** Moo! %s"
-HELP_MSG = SYSTEM_MESSAGE % """
-Mute all broadcasted messages (unless /shout is used):
-/mute
-/unmute
+HELP_MSG = SYSTEM_MESSAGE % """Information about channel participants:
+/who
+/who am i
+/who online
 
-Shouts reaches all participants even if they have muted the chat:
-/shout <message>
+Referencing yourself:
+/me <message>
 
 Private messages (/pm and /msg do the same thing):
 /pm <nickname> <message>
@@ -19,13 +19,13 @@ Private messages (/pm and /msg do the same thing):
 /pm <address> <message>
 /msg <address> <message>
 
-Information about channel participants:
-/who
-/who am i
-/who online
+Shouts reaches all participants even if they have muted the chat:
+/shout <message>
 
-Referencing yourself:
-/me <message>"""
+Mute all broadcasted messages (unless /shout is used):
+/mute
+/unmute
+"""
 
 NO_ACCESS = """You do not have access to this channel.
 
