@@ -5,17 +5,15 @@ from test import ModelTestCase
 from moo.chat import Chat
 from moo.user import User
 
-class TestChat(ModelTestCase):
-    '''Tests for Moo Chat Models'''
+class TestChatListeners(ModelTestCase):
+    '''Tests for Chat listener functionality'''
     chat = None
     user1 = None
     user2 = None
     user3 = None
-    tagline1 = u'Foo'
-    tagline2 = u'Bar'
     
     def setUp(self):
-        super(TestChat, self).setUp()
+        super(TestChatListeners, self).setUp()
         self.user1 = User.create(u'u1', u'u1@foo')
         self.user2 = User.create(u'u2', u'u2@foo')
         self.user3 = User.create(u'u3', u'u3@foo')
@@ -35,6 +33,19 @@ class TestChat(ModelTestCase):
         self.chat.remove_listener(self.user1.address)
         self.assertEqual(set([u.key() for u in self.user2, self.user3]), set(u.key() for u in self.chat.listeners))
 
+class TestChatTaglines(ModelTestCase):
+    '''Tests for Chat taglines functionality'''
+    chat = None
+    user1 = None
+    tagline1 = u'Foo'
+    tagline2 = u'Bar'
+    
+    def setUp(self):
+        super(TestChatTaglines, self).setUp()
+        self.user1 = User.create(u'u1', u'u1@foo')
+        self.chat = Chat.create(title=u'chat 1')
+        self.chat.add_participant(self.user1.address)
+        
     def test_default_taglines(self):
         self.assertEqual([], self.chat.taglines)
 
