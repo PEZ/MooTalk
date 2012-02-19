@@ -83,6 +83,8 @@ class ChatHandler(WebHandler):
                 chat.add_participant(self.request.get('address').strip())
             elif action == 'remove_participant':
                 chat.remove_participant(self.request.get('participant'))
+            elif action == 'update_taglines':
+                chat.update_taglines(self.request.get('taglines'))
             self.get(_key_or_title)
                     
 

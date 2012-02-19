@@ -14,3 +14,5 @@ handlers:
 inbound_services:
 - xmpp_message
 
+threadsafe:
+- yes

@@ -2,7 +2,7 @@ from google.appengine.ext import db
 from gravatar import gravatar
 
 class User(db.Model):
-    nickname = db.StringProperty()
+    nickname = db.StringProperty(required=True)
     address = db.StringProperty(required=True)
     avatar = db.LinkProperty()
 

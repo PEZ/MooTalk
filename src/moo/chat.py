@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: latin-1 -*-
+
 from google.appengine.ext import db
 from  google.appengine.api import xmpp
 from google.appengine.api import users
@@ -8,6 +11,7 @@ class Chat(db.Model):
     title = db.StringProperty(required=True)
     participants = db.StringListProperty()
     non_listeners = db.StringListProperty()
+    taglines = db.StringListProperty()
 
     @classmethod
     def create(cls, title):
@@ -46,6 +50,22 @@ class Chat(db.Model):
             except IndexError:
                 logging.error("Cleaning away non user %s from chat %s" % (email, self.title))
                 self.remove_participant(email)
+
+    def _update_taglinesTx(self, taglines):
+        self.taglines = taglines
+        self.put()
+
+    @property
+    def taglines_as_text(self):
+        return "\n".join(self.taglines)
+
+    def update_taglines(self, taglines_text):
+        """
+        Takes a chunk of text, splits it up on newlines, removes empty lines and updates the list of taglines
+        """
+        taglines = [tagline.strip() for tagline in taglines_text.split('\n') if tagline.strip() != '']
+        if taglines:
+            db.run_in_transaction(self._update_taglinesTx, taglines)
 
     def _add_participantTx(self, address):
         if address not in self.participants:

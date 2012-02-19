@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import unittest
+from google.appengine.ext import testbed
+from google.appengine.api import memcache
+from google.appengine.ext import db
+
 import re
 
 class MooTestCase(unittest.TestCase):
@@ -59,17 +63,17 @@ class MooTestCase(unittest.TestCase):
         else:
             return
     
-    def assertInInterval(self, value, min, max):
+    def assertInInterval(self, value, minv, maxv):
         """ Asserts that value is larger or equal to min and smaller or equal to max """
-        if value < min:
-            raise self.failureException, "%s < %s" % (value, min)
-        elif value > max:
-            raise self.failureException, "%s > %s" % (value, max)
+        if value < minv:
+            raise self.failureException, "%s < %s" % (value, minv)
+        elif value > maxv:
+            raise self.failureException, "%s > %s" % (value, maxv)
 
-    def assertNotInInterval(self, value, min, max):
+    def assertNotInInterval(self, value, minv, maxv):
         """ Asserts that value is larger or equal to min and smaller or equal to max """
-        if max >= value >= min:
-            raise self.failureException, "%s >= %s >= %s" % (max, value, min)
+        if maxv >= value >= minv:
+            raise self.failureException, "%s >= %s >= %s" % (maxv, value, minv)
     
     def assertContains(self, container, value):
         if value not in container:
@@ -79,16 +83,11 @@ class MooTestCase(unittest.TestCase):
         if value in container:
             raise self.failureException('%r in %r' % (value, container))
 
-from google.appengine.api import apiproxy_stub_map
-from google.appengine.api import datastore_file_stub
-
-def clear_datastore():
-    '''Use a fresh stub datastore.'''
-    apiproxy_stub_map.apiproxy = apiproxy_stub_map.APIProxyStubMap()
-    stub = datastore_file_stub.DatastoreFileStub('mootalk', '/dev/null', '/dev/null')
-    apiproxy_stub_map.apiproxy.RegisterStub('datastore_v3', stub)
- 
 class ModelTestCase(MooTestCase):    
     def setUp(self):
         super(ModelTestCase, self).setUp()
-        clear_datastore()
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+        self.testbed.init_xmpp_stub()

@@ -24,7 +24,13 @@
       </li>
     {% endfor %}
   </ul>
-
+  <h2>Taglines</h2>
+  <form method="post">
+    <input type="hidden" name="chat" value="{{chat.key}}" />
+    <input type="hidden" name="action" value="update_taglines" />
+    <textarea rows="5" cols="60" name="taglines">{{chat.taglines_as_text}}</textarea>
+    <input type="submit" value="Update taglines" />
+  </form>
   <form method="post">
     <input type="hidden" name="chat" value="{{chat.key}}" />
     <input type="hidden" name="action" value="delete_chat" />

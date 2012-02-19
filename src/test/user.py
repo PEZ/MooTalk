@@ -10,7 +10,7 @@ class TestUser(ModelTestCase):
 
     def test_chats(self):
         '''A users chats property is a list of all chats the user is listed as a participant'''
-        user = User(address='foo@bar.com')
+        user = User(nickname='Foo', address='foo@bar.com')
         user.put()
         chat1 = Chat.create(title='1')
         chat2 = Chat.create(title='2')
