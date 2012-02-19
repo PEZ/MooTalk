@@ -35,6 +35,9 @@ class TestChat(ModelTestCase):
         self.chat.remove_listener(self.user1.address)
         self.assertEqual(set([u.key() for u in self.user2, self.user3]), set(u.key() for u in self.chat.listeners))
 
+    def test_default_taglines(self):
+        self.assertEqual([], self.chat.taglines)
+
     def test_update_taglines_no_tagline(self):
         '''Update with an empty tagline text should result in an empty list of taglines'''
         self.chat.update_taglines('')

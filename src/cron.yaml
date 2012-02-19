@@ -1,0 +1,4 @@
+cron:
+- description: Taglines job
+  url: /tasks/tagliner
+  schedule: every 2 hours

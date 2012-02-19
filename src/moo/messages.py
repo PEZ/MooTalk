@@ -5,6 +5,7 @@ SHOUT_MESSAGE = "%s SHOUTS: %s"
 ME_MESSAGE = "*%s* %s"
 PRIVATE_MESSAGE = "-> *%s* %s"
 SYSTEM_MESSAGE = "*** Moo! %s"
+TAGLINE_MESSAGE = "### %s ###"
 HELP_MSG = SYSTEM_MESSAGE % """Information about channel participants:
 /who
 /who am i
