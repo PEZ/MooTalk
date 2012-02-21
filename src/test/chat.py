@@ -49,8 +49,10 @@ class TestChatTaglines(ModelTestCase):
     def test_default_taglines(self):
         self.assertEqual([], self.chat.taglines)
 
-    def test_update_taglines_no_tagline(self):
+    def test_update_taglines_clear_tagline(self):
         '''Update with an empty tagline text should result in an empty list of taglines'''
+        self.chat.update_taglines('B')
+        self.assertEqual(self.chat.taglines, ['B'])
         self.chat.update_taglines('')
         self.assertEqual(self.chat.taglines, [])
 

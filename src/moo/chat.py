@@ -64,8 +64,7 @@ class Chat(db.Model):
         Takes a chunk of text, splits it up on newlines, removes empty lines and updates the list of taglines
         """
         taglines = [tagline.strip() for tagline in taglines_text.split('\n') if tagline.strip() != '']
-        if taglines:
-            db.run_in_transaction(self._update_taglinesTx, taglines)
+        db.run_in_transaction(self._update_taglinesTx, taglines)
 
     def _add_participantTx(self, address):
         if address not in self.participants:
