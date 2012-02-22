@@ -5,6 +5,7 @@ from google.appengine.ext import db
 from  google.appengine.api import xmpp
 from google.appengine.api import users
 import os
+import re
 from moo.user import User
 
 class Chat(db.Model):
@@ -24,7 +25,7 @@ class Chat(db.Model):
     
     @property
     def jid(self):
-        return "%s@%s.appspotchat.com" % (self.title, os.environ['APPLICATION_ID'])
+        return "%s@%s.appspotchat.com" % (self.title, re.sub('dev~', '', os.environ['APPLICATION_ID']))
     
     @property
     def listeners(self):

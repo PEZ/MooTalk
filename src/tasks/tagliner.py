@@ -26,8 +26,8 @@ class Tagliner(webapp.RequestHandler):
         chats = get_chats_with_taglines()
         for chat in chats:
             tagline = get_random_tagline(chat)
-            listeners = [u for u in chat.listeners if xmpp.get_presence(u.address, chat.jid)]
-            xmpp.send_message(listeners, messages.TAGLINE_MESSAGE % tagline, chat.jid)
+            addresses = [u.address for u in chat.listeners if xmpp.get_presence(u.address, chat.jid)]
+            xmpp.send_message(addresses, messages.TAGLINE_MESSAGE % tagline, chat.jid)
 
 def main():
     app = webapp.WSGIApplication([
