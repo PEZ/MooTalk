@@ -27,6 +27,9 @@ Shouts reaches all participants even if they have muted the chat:
 Mute all broadcasted messages (unless /shout is used):
 /mute
 /unmute
+
+E-mail this channel on %s
+(Put the message in the Subject.)
 """
 
 NO_ACCESS = """You do not have access to this channel.

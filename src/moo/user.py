@@ -64,18 +64,18 @@ class User(db.Model):
         
         user.delete()
 
-    @property
-    def email_addresses(self):
+    def email_addresses_get(self):
         return self._email_addresses
     
-    @email_addresses.setter
-    def email_addresses(self, addresses):
+    def email_addresses_set(self, addresses):
         if type(addresses) in (str, type(u'')):
             self._email_addresses = textlines_to_list(addresses)
         else:
             self._email_addresses = addresses
         self.put()
     
+    email_addresses = property(email_addresses_get, email_addresses_set)
+
     @property
     def email_addresses_as_text(self):
         return '\n'.join(self._email_addresses)
