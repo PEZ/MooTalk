@@ -42,7 +42,9 @@ MooTalk is experimental. If you think you should have access, check:
 
 EMAIL_NO_ACCESS_MESSAGE_SUBJECT = "Moo! %s - %s - No accesss"
 EMAIL_NO_ACCESS_MESSAGE_BODY = """Moo!
+
 Your message to %s was not delivered because the e-mail address %s is not registered as a valid sender.
+
 Now you know.
 
 Ask a MooTalk admin to fix this if you think it is an error.
