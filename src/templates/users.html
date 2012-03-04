@@ -13,12 +13,14 @@
         <th>Avatar</th>
         <th>Nick name</th>
         <th>Address</th>
+        <th>X</th>
 	</tr>
     {% for user in users %}
       <tr>
       	<td><img src="{{user.avatar}}" alt="gravatar" /></td>
         <td><a href="/user/{{user.key}}">{{user.nickname}}</a></td>
         <td>{{user.address}}</td>
+        <td>
           <form method="post">
             <input type="hidden" name="key" value="{{user.key}}" />
             <input type="submit" value="X" />
