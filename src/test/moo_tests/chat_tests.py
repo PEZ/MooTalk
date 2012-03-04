@@ -56,33 +56,6 @@ class TestChatTaglines(ModelTestCase):
         self.chat.update_taglines('')
         self.assertEqual(self.chat.taglines, [])
 
-    def test_update_taglines_one_line(self):
-        '''One line of text in results in that line being the only tagline'''
-        self.chat.update_taglines(self.tagline1)
-        self.assertEqual([self.tagline1], self.chat.taglines)
-
-    def test_update_taglines_multiple_lines(self):
-        '''X nonempty lines of text results in X taglines'''
-        self.chat.update_taglines('''%s
-        %s
-        %s
-        %s''' % (self.tagline1, self.tagline2, self.tagline2, self.tagline1))
-        self.assertEqual([self.tagline1, self.tagline2, self.tagline2, self.tagline1], self.chat.taglines)
-
-    def test_update_taglines_no_empty_lines(self):
-        '''Empty lines are stripped away when building the taglines list'''
-        self.chat.update_taglines('''
-        
-        ''')
-        self.assertEqual([], self.chat.taglines)
-        self.chat.update_taglines('''
-        %s
-        ''' % self.tagline1)
-        self.assertEqual([self.tagline1], self.chat.taglines)
-        self.chat.update_taglines('''%s
-        %s''' % (self.tagline1, self.tagline2))
-        self.assertEqual([self.tagline1, self.tagline2], self.chat.taglines)
-
     def test_taglines_as_text(self):
         '''The taglines_as_text property returns all taglines as a string separating taglines using newline'''
         self.chat.update_taglines('''%s

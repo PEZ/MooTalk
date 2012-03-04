@@ -102,16 +102,16 @@ class XmppHandler(xmpp_handlers.CommandHandler):
                 if arg == "am i":
                     message.reply(messages.SYSTEM_MESSAGE % ("You are " + user_listing([self.sender])))
                 else:
-                    who = "\nOnline and listening:\n"
+                    who = "\nOnline:\n"
                     listeners = [u for u in self.chat.listeners if xmpp.get_presence(u.address, message.to)]
                     who += user_listing(listeners)
-                    who += "\n\nOnline but not listening:\n"
-                    non_listeners = [User.user(address) for address in self.chat.non_listeners if xmpp.get_presence(address, message.to)]
-                    who += user_listing(non_listeners)
                     if arg != "online":
                         offlines = [u for u in self.chat.users if not xmpp.get_presence(u.address, message.to)]
                         who += "\n\nOffline:\n"
                         who += user_listing(offlines)
+                    who += "\n\nOnline, but has muted this chat:\n"
+                    non_listeners = [User.user(address) for address in self.chat.non_listeners if xmpp.get_presence(address, message.to)]
+                    who += user_listing(non_listeners)
                     message.reply(messages.SYSTEM_MESSAGE % who)
             else:
                 message.reply(messages.HELP_MSG)

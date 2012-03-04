@@ -7,6 +7,7 @@ from google.appengine.api import users
 import os
 import re
 from moo.user import User
+from moo.utils import textlines_to_list
 
 class Chat(db.Model):
     title = db.StringProperty(required=True)
@@ -52,20 +53,12 @@ class Chat(db.Model):
                 logging.error("Cleaning away non user %s from chat %s" % (email, self.title))
                 self.remove_participant(email)
 
-    def _update_taglinesTx(self, taglines):
-        self.taglines = taglines
-        self.put()
-
     @property
     def taglines_as_text(self):
         return "\n".join(self.taglines)
 
     def update_taglines(self, taglines_text):
-        """
-        Takes a chunk of text, splits it up on newlines, removes empty lines and updates the list of taglines
-        """
-        taglines = [tagline.strip() for tagline in taglines_text.split('\n') if tagline.strip() != '']
-        db.run_in_transaction(self._update_taglinesTx, taglines)
+        self.taglines = textlines_to_list(taglines_text)
 
     def _add_participantTx(self, address):
         if address not in self.participants:

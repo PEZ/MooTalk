@@ -1,9 +1,11 @@
 from google.appengine.ext import db
 from gravatar import gravatar
+from moo.utils import textlines_to_list
 
 class User(db.Model):
     nickname = db.StringProperty(required=True)
     address = db.StringProperty(required=True)
+    _email_addresses = db.StringListProperty()
     avatar = db.LinkProperty()
 
     @classmethod
@@ -30,6 +32,22 @@ class User(db.Model):
         return user.get()
     
     @classmethod
+    def user_from_email_address(cls, address):
+        user = cls.all()
+        user.filter("_email_addresses =", address)
+        return user.get()
+    
+    @classmethod
+    def user_from_any_address(cls, address):
+        user = cls.user(address)
+        if user is not None:
+            return user
+        else:
+            user = cls.all()
+            user.filter("_email_addresses =", address)
+            return user.get()
+    
+    @classmethod
     def murder(cls, murder_key):
         import logging
         
@@ -41,7 +59,23 @@ class User(db.Model):
             chat.clean_chat_from_non_users()
         
         user.delete()
+
+    @property
+    def email_addresses(self):
+        return self._email_addresses
     
+    @email_addresses.setter
+    def email_addresses(self, addresses):
+        if type(addresses) is str:
+            self._email_addresses = textlines_to_list(addresses)
+        else:
+            self._email_addresses = addresses
+        self.put()
+    
+    @property
+    def email_addresses_as_text(self):
+        return '\n'.join(self._email_addresses)
+
     @property
     def chats(self):     
         from moo.chat import Chat

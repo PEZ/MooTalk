@@ -1,4 +1,4 @@
-application: mootalk
+application: pezius
 version: 2
 runtime: python
 api_version: 1
@@ -17,6 +17,7 @@ handlers:
 
 inbound_services:
 - xmpp_message
+- mail
 
 threadsafe:
 - yes
