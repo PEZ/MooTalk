@@ -7,6 +7,7 @@ from moo.user import User
 from moo.chat import Chat
 from google.appengine.api import users as GoogleUsers
 from moo.xmpp_handler import XmppHandler
+from moo.mail_handler import MailHandler
 
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp import template
@@ -120,6 +121,31 @@ class UsersHandler(WebHandler):
         }
         self.Render("users.html", template_values)
 
+
+class UserHandler(WebHandler):
+    @admin_required
+    def post(self, key):
+        user = User.get(key)
+        if user != None:
+            action = self.request.get('action')
+            if action == 'delete_user':
+                user.delete()
+            elif action == 'update_user':
+                user.address = self.request.get('address').strip()
+                user.nick = self.request.get('nick').strip()
+                user.email_addresses = self.request.get('email_addresses')
+                user.put()
+            self.get(key)
+
+    @admin_required
+    def get(self, key):
+        user = User.get(key)
+        if user != None:
+            template_values = {
+                'user': user
+            }
+            self.Render("user.html", template_values)
+
 class IndexHandler(WebHandler):
     def get(self):
         template_values = {
@@ -139,7 +165,9 @@ def main():
             ('/chats/?', ChatsHandler),
             ('/chat/(.*?)/?', ChatHandler),
             ('/users/?', UsersHandler),
+            ('/user/(.*?)/?', UserHandler),
             ('/_ah/xmpp/message/chat/', XmppHandler),
+            ('/_ah/mail/.+', MailHandler),
             ], debug=True)
     wsgiref.handlers.CGIHandler().run(app)
 

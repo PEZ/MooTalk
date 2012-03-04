@@ -18,7 +18,8 @@
           <input type="hidden" name="participant" value="{{user.address}}" />
           <input type="hidden" name="action" value="remove_participant" />
           <input type="submit" value="X" />
-          <img src="{{ user.avatar }}" alt="gravatar" />
+          <img src="{{user.avatar}}" alt="gravatar" />
+          <label><a href="/user/{{user.key}}">{{user.nickname}}</a></label>
           <label>{{user.address}}</label>
         </form>
       </li>

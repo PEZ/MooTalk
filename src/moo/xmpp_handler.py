@@ -3,11 +3,8 @@ from google.appengine.api import xmpp
 from google.appengine.ext.webapp import xmpp_handlers
 from moo.chat import Chat
 from moo.user import User
+from moo.user import user_in_chat
 import moo.messages as messages
-
-
-def user_in_chat(user, chat):
-    return chat != None and user != None and user.address in chat.participants 
 
 def get_chat(message):
     to = message.to.strip()

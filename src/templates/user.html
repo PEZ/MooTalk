@@ -1,0 +1,26 @@
+  <title>User: {{user.nick}}</title>
+  <form method="post">
+    <h2>User: <em>{{user.nick}}</em></h2>
+    <input type="hidden" name="user" value="{{user.key}}" />
+    <input type="hidden" name="action" value="update_user" />
+    <label>Nick:</label>
+    <input type="text" name="nick" value="{{user.nickname}}"/>
+    <label>Address:</label>
+    <input type="text" name="address" value="{{user.address}}"/>
+
+    <h2>E-mail addresses</h2>
+    <p>The user can send MooTalk messages from her main address and also these:</p>
+    <p>
+    <textarea rows="5" cols="60" name="email_addresses">{{user.email_addresses_as_text}}</textarea>
+    </p>
+    <input type="submit" value="Update user details" />
+  </form>
+
+  <hr/>
+  <form method="post">
+    <input type="hidden" name="user" value="{{user.key}}" />
+    <input type="hidden" name="action" value="delete_user" />
+    <label>(Think first)</label>
+    <input type="submit" value="Delete this user" />
+    <label>(Think again)</label>
+  </form>

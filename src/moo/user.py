@@ -2,6 +2,10 @@ from google.appengine.ext import db
 from gravatar import gravatar
 from moo.utils import textlines_to_list
 
+def user_in_chat(user, chat):
+    '''This user has access to this chat?'''
+    return chat != None and user != None and user.address in chat.participants 
+
 class User(db.Model):
     nickname = db.StringProperty(required=True)
     address = db.StringProperty(required=True)
@@ -66,7 +70,7 @@ class User(db.Model):
     
     @email_addresses.setter
     def email_addresses(self, addresses):
-        if type(addresses) is str:
+        if type(addresses) in (str, type(u'')):
             self._email_addresses = textlines_to_list(addresses)
         else:
             self._email_addresses = addresses
@@ -77,7 +81,7 @@ class User(db.Model):
         return '\n'.join(self._email_addresses)
 
     @property
-    def chats(self):     
+    def chats(self):
         from moo.chat import Chat
         return db.get(Chat.all(keys_only=True).filter("participants =", self.address))        
             

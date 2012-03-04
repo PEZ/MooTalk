@@ -1,4 +1,5 @@
 MESSAGE = "%s: %s"
+EMAIL_MESSAGE = "%s (via e-mail): %s"
 MUTE_MESSAGE = "Chat Muted. You will not be sent broadcasted messages (don't forget to unmute)"
 UNMUTE_MESSAGE = "Chat unmuted."
 SHOUT_MESSAGE = "%s SHOUTS: %s"

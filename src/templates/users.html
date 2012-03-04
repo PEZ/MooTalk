@@ -10,12 +10,15 @@
   <h2>A selected few</h2>
   <table>
   	<tr>
-        <th>Avatar</th><th>Nick name</th><th>E-mail</th><th>Member of</th>
+        <th>Avatar</th>
+        <th>Nick name</th>
+        <th>Address</th>
+        <th>Member of</th>
 	</tr>
     {% for user in users %}
       <tr>
       	<td><img src="{{user.avatar}}" alt="gravatar" /></td>
-        <td>{{user.nickname}}</td>
+        <td><a href="/user/{{user.key}}">{{user.nickname}}</a></td>
         <td>{{user.address}}</td>
 		<td>
 		    <ul>
