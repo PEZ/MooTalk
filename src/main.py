@@ -129,7 +129,7 @@ class UserHandler(WebHandler):
         if user != None:
             action = self.request.get('action')
             if action == 'delete_user':
-                user.delete()
+                user.murder(key)
             elif action == 'update_user':
                 user.address = self.request.get('address').strip()
                 user.nick = self.request.get('nick').strip()

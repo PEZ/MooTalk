@@ -8,6 +8,7 @@ import os
 import re
 from moo.user import User
 from moo.utils import textlines_to_list
+from moo.utils import get_appname
 
 class Chat(db.Model):
     title = db.StringProperty(required=True)
@@ -17,6 +18,7 @@ class Chat(db.Model):
 
     @classmethod
     def create(cls, title):
+        title = title.lower()
         if title not in [chat.title for chat in cls.all()]:
             chat = cls(title=title)
             chat.put()
@@ -92,6 +94,10 @@ class Chat(db.Model):
         if address not in self.non_listeners and address in [u.address for u in User.all()]:
             self.non_listeners.append(address)
             self.put()
+
+    @property
+    def email_address(self):
+        return "%s@%s.appspotmail.com" % (self.title, get_appname())
 
     @classmethod
     def chat_from_title(cls, title):

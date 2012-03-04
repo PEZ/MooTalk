@@ -17,6 +17,17 @@
   </form>
 
   <hr/>
+
+  <h2>Member of:</h2>
+  <ul>
+  {% for chat in user.chats %}
+    <li><a href="/chat/{{chat.key}}">{{chat.title}}</a></li>
+  {% endfor %}
+  </ul>
+
+
+  <hr/>
+  
   <form method="post">
     <input type="hidden" name="user" value="{{user.key}}" />
     <input type="hidden" name="action" value="delete_user" />

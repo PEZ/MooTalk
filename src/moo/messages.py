@@ -7,9 +7,9 @@ ME_MESSAGE = "*%s* %s"
 PRIVATE_MESSAGE = "-> *%s* %s"
 SYSTEM_MESSAGE = "*** Moo! %s"
 TAGLINE_MESSAGE = "### %s ###"
-CHAT_EMAIL_ADDRESS = "%s@%s.appspotmail.com"
 
-HELP_MSG = SYSTEM_MESSAGE % """Information about channel participants:
+HELP_MSG = SYSTEM_MESSAGE % """
+Information about channel participants:
 /who
 /who am i
 /who online
@@ -39,3 +39,15 @@ NO_ACCESS = """You do not have access to this channel.
 MooTalk is experimental. If you think you should have access, check:
 - the address of the MooTalk bot you're talking too (stuff before the @ in the address.
 - that your Jabber address matches that which is registered in the MooTalk user list (check this with whoever invited you)."""
+
+EMAIL_NO_ACCESS_MESSAGE_SUBJECT = "Moo! %s - %s - No accesss"
+EMAIL_NO_ACCESS_MESSAGE_BODY = """Moo!
+Your message to %s was not delivered because the e-mail address %s is not registered as a valid sender.
+Now you know.
+
+Ask a MooTalk admin to fix this if you think it is an error.
+
+Best Moos,
+
+/Your MooTalk servant.
+"""

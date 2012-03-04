@@ -1,5 +1,6 @@
 import logging
 from google.appengine.ext.webapp.mail_handlers import InboundMailHandler
+from google.appengine.api import mail
 from google.appengine.api import xmpp
 from moo.chat import Chat
 from moo.user import User
@@ -7,6 +8,7 @@ from moo.user import user_in_chat
 import moo.messages as messages
 from email.utils import parseaddr
 from email.header import decode_header
+from moo.utils import get_appname
 
 def get_header(header_text, default="iso-8859-1"):
     """Decode the specified header"""
@@ -26,7 +28,7 @@ def get_to_address(message):
     return parseaddr(message.to)[1].lower()
 
 def get_chat(address):
-    chat_title = address.split('@')[0]
+    chat_title = address.split('@')[0].lower()
     return Chat.all().filter('title =', chat_title).get()
 
 def get_chat_and_user(message):
@@ -43,6 +45,11 @@ class MailHandler(InboundMailHandler):
         if user_in_chat(self.sender, self.chat):
             return True
         else:
+            if self.chat is not None:
+                mail.send_mail(self.chat.email_address,
+                               get_sender_address(message),
+                               messages.EMAIL_NO_ACCESS_MESSAGE_SUBJECT % (get_appname(), self.chat.title),
+                               messages.EMAIL_NO_ACCESS_MESSAGE_BODY % (self.chat.title, get_sender_address(message)))
             logging.info("Denied e-mail access for sender %s to chat %s" % (get_sender_address(message), self.chat))
             return False
 
