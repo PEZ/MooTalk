@@ -4,6 +4,7 @@ from google.appengine.ext.webapp import xmpp_handlers
 from moo.chat import Chat
 from moo.user import User
 from moo.user import user_in_chat
+from moo.utils import get_appname
 import moo.messages as messages
 
 def get_chat(message):
@@ -36,7 +37,7 @@ class XmppHandler(xmpp_handlers.CommandHandler):
 
     def unhandled_command(self, message=None):
         if self.set_chat_and_user(message):
-            message.reply(messages.HELP_MSG)
+            message.reply(messages.HELP_MSG % messages.CHAT_EMAIL_ADDRESS % (self.chat.title, get_appname()))
 
     def _send_text(self, text, to, shout=False):
         message_template = messages.MESSAGE

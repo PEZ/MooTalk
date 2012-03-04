@@ -7,6 +7,8 @@ ME_MESSAGE = "*%s* %s"
 PRIVATE_MESSAGE = "-> *%s* %s"
 SYSTEM_MESSAGE = "*** Moo! %s"
 TAGLINE_MESSAGE = "### %s ###"
+CHAT_EMAIL_ADDRESS = "%s@%s.appspotmail.com"
+
 HELP_MSG = SYSTEM_MESSAGE % """Information about channel participants:
 /who
 /who am i
